@@ -12,7 +12,7 @@ function main()
   if not isSampLoaded or not isSampLoaded() then return end
   if not isSampfuncsLoaded or not isSampfuncsLoaded() then return end
   repeat wait(0) until isSampAvailable and isSampAvailable()
-    local refreshInterval = 60000 -- 60 секунд
+    local refreshInterval = 300000
     local lastRefresh = os.clock() * 1000
 
     while true do
@@ -28,7 +28,6 @@ function main()
     end
 end
 
-  -- Видаляє кастомний індикатор, якщо він є
   function removeCustomIndicator()
     local eval = _G.evalcef or _G.evalanon
     local js = [[
@@ -40,7 +39,6 @@ end
     if eval then pcall(function() eval(js) end) end
   end
 
-  -- Оновлює індикатор: видаляє і додає заново
   function refreshCustomIndicator()
     removeCustomIndicator()
     wait(100)
