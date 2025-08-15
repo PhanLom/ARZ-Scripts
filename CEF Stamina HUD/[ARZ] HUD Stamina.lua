@@ -1,4 +1,4 @@
-script_name = "custom-indicator"
+script_name = "[ARZ] HUD Stamina"
 script_author = "PhanLom"
 script_version = "1.0"
 
@@ -12,13 +12,40 @@ function main()
   if not isSampLoaded or not isSampLoaded() then return end
   if not isSampfuncsLoaded or not isSampfuncsLoaded() then return end
   repeat wait(0) until isSampAvailable and isSampAvailable()
-  while true do
-    tryAddCustomIndicator()
-    local stamina = getSprintLocalPlayer()
-    updateStaminaIndicator(stamina)
-    wait(500)
-  end
+    local refreshInterval = 60000 -- 60 секунд
+    local lastRefresh = os.clock() * 1000
+
+    while true do
+      local now = os.clock() * 1000
+      if now - lastRefresh > refreshInterval then
+        refreshCustomIndicator()
+        lastRefresh = now
+      end
+      tryAddCustomIndicator()
+      local stamina = getSprintLocalPlayer()
+      updateStaminaIndicator(stamina)
+      wait(500)
+    end
 end
+
+  -- Видаляє кастомний індикатор, якщо він є
+  function removeCustomIndicator()
+    local eval = _G.evalcef or _G.evalanon
+    local js = [[
+      (function() {
+        var el = document.getElementById('custom_indicator');
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+      })();
+    ]]
+    if eval then pcall(function() eval(js) end) end
+  end
+
+  -- Оновлює індикатор: видаляє і додає заново
+  function refreshCustomIndicator()
+    removeCustomIndicator()
+    wait(100)
+    tryAddCustomIndicator()
+  end
 
 
 function tryAddCustomIndicator()
