@@ -7,19 +7,22 @@ local inicfg = require 'inicfg'
 local lfs = require 'lfs'
 local config_path = 'PLTC/PLTC'
 local config_dir = 'PLTC'
-local default_cfg = {settings = {enabled = true}}
+local default_cfg = {settings = {enabled = false}}
 
+-- Створення директорії, якщо не існує
 if not lfs.attributes(config_dir, 'mode') then
 	lfs.mkdir('PLTC')
 	lfs.mkdir(config_dir)
 end
 
+-- Створення ini-файлу, якщо не існує або порожній
 local config = inicfg.load(nil, config_path)
 if not config or not config.settings or config.settings.enabled == nil then
 	config = default_cfg
 	inicfg.save(config, config_path)
 end
 
+-- Функція для динамічного читання статусу
 local function get_status()
 	local cfg = inicfg.load(nil, config_path)
 	if cfg and cfg.settings and cfg.settings.enabled ~= nil then
