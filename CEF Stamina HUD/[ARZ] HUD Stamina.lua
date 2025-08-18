@@ -62,6 +62,7 @@ function tryAddCustomIndicator()
       var r = 30 * scale;
       var iconSize = 19 * scale;
       var iconScale = 1.5 * scale;
+      var translateX = (w <= 1921) ? -4 : -1;
       var html = `<div id="custom_indicator" class="player-info__indicator">
         <div class="circle-indicator" style="--svg-width:${svgWidth}px; --icon-color:rgba(56, 251, 7, 1); box-shadow: rgb(255, 254, 254) 0px 0px ${30*scale}px 1px;">
           <div class="circle-indicator__lines">
@@ -71,7 +72,7 @@ function tryAddCustomIndicator()
             </svg>
           </div>
           <div class="circle-indicator__light"></div>
-          <i class="circle-indicator__icon" style="width: ${iconSize}px; height: ${iconSize}px; transform: scale(${iconScale}) translateX(-1px);">
+          <i class="circle-indicator__icon" style="width: ${iconSize}px; height: ${iconSize}px; transform: scale(${iconScale}) translateX(${translateX}px);">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-run" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
