@@ -53,16 +53,25 @@ function tryAddCustomIndicator()
       var indicators = document.querySelector('.player-info__indicators');
       if (!indicators) return false;
       if (document.getElementById('custom_indicator')) return true;
+      // Adaptive sizes
+      var w = window.innerWidth;
+      var base = 2560; // reference width for 2K
+      var scale = Math.max(0.7, Math.min(1.0, w / base));
+      var svgWidth = 66 * scale;
+      var cx = 33 * scale;
+      var r = 30 * scale;
+      var iconSize = 19 * scale;
+      var iconScale = 1.5 * scale;
       var html = `<div id="custom_indicator" class="player-info__indicator">
-        <div class="circle-indicator" style="--svg-width:66px; --icon-color:rgba(56, 251, 7, 1); box-shadow: rgb(255, 254, 254) 0px 0px 30px 1px;">
+        <div class="circle-indicator" style="--svg-width:${svgWidth}px; --icon-color:rgba(56, 251, 7, 1); box-shadow: rgb(255, 254, 254) 0px 0px ${30*scale}px 1px;">
           <div class="circle-indicator__lines">
-            <svg class="circle-indicator__svg-zone" style="--dashoffset:0; --dasharray:188.496;">
-              <circle class="circle-indicator__total" cx="33" cy="33" r="30"></circle>
-              <circle class="circle-indicator__current" cx="33" cy="33" r="30"></circle>
+            <svg class="circle-indicator__svg-zone" style="--dashoffset:0; --dasharray:${2*Math.PI*r};" width="${svgWidth}" height="${svgWidth}">
+              <circle class="circle-indicator__total" cx="${cx}" cy="${cx}" r="${r}"></circle>
+              <circle class="circle-indicator__current" cx="${cx}" cy="${cx}" r="${r}"></circle>
             </svg>
           </div>
           <div class="circle-indicator__light"></div>
-          <i class="circle-indicator__icon" style="width: 19px; height: 19px; transform: scale(1.5) translateX(-1px);">
+          <i class="circle-indicator__icon" style="width: ${iconSize}px; height: ${iconSize}px; transform: scale(${iconScale}) translateX(-1px);">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-run" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
